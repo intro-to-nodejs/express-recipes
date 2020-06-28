@@ -1,6 +1,8 @@
 const express = require('express');
 const path = require('path');
 
+const recipeRouter = require('./routers/recipe');
+
 const app = express();
 
 /*
@@ -19,6 +21,7 @@ app.use((req, res, next) => {
 /*
   ROUTE HANDLERS
 */
+app.use('/api/v1/recipes', recipeRouter);
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
