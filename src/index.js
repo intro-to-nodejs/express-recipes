@@ -1,3 +1,4 @@
+const cors = require('cors');
 const express = require('express');
 const path = require('path');
 
@@ -8,6 +9,8 @@ const app = express();
 /*
   MIDDLEWARE
 */
+
+app.use(cors());
 
 // Log information about every incoming request
 app.use((req, res, next) => {
