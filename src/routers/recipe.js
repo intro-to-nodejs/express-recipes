@@ -35,4 +35,25 @@ router.post('/', async (req, res, next) => {
   }
 });
 
+router.get('/:id', async (req, res, next) => {
+  try {
+    const data = await fs.readFile(recipesFilePath);
+    const recipes = JSON.parse(data);
+
+    const recipe = recipes.find(
+      recipe => recipe.id === parseInt(req.params.id)
+    );
+
+    if (!recipe) {
+      const err = new Error('Recipe not found');
+      err.status = 404;
+      throw err;
+    }
+
+    res.json(recipe);
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;
