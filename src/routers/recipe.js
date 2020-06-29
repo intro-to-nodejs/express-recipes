@@ -15,4 +15,24 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+router.post('/', async (req, res, next) => {
+  try {
+    const data = await fs.readFile(recipesFilePath);
+    const recipes = JSON.parse(data);
+
+    const newRecipe = {
+      id: recipes.length + 1,
+      ...req.body,
+    };
+
+    recipes.push(newRecipe);
+
+    await fs.writeFile(recipesFilePath, JSON.stringify(recipes));
+
+    res.status(201).json(newRecipe);
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;
