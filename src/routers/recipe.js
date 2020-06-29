@@ -2,6 +2,8 @@ const express = require('express');
 const fs = require('fs').promises;
 const path = require('path');
 
+const auth = require('../middleware/auth');
+
 const router = express.Router();
 
 const recipesFilePath = path.join(__dirname, '../recipes.json');
@@ -15,7 +17,7 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.post('/', async (req, res, next) => {
+router.post('/', auth.authenticate(), async (req, res, next) => {
   try {
     const data = await fs.readFile(recipesFilePath);
     const recipes = JSON.parse(data);
@@ -56,7 +58,7 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-router.put('/:id', async (req, res, next) => {
+router.put('/:id', auth.authenticate(), async (req, res, next) => {
   try {
     const data = await fs.readFile(recipesFilePath);
     const recipes = JSON.parse(data);
@@ -86,7 +88,7 @@ router.put('/:id', async (req, res, next) => {
   }
 });
 
-router.delete('/:id', async (req, res, next) => {
+router.delete('/:id', auth.authenticate(), async (req, res, next) => {
   try {
     const data = await fs.readFile(recipesFilePath);
     const recipes = JSON.parse(data);

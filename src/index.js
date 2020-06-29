@@ -3,6 +3,8 @@ const express = require('express');
 const path = require('path');
 
 const recipeRouter = require('./routers/recipe');
+const userRouter = require('./routers/user');
+const auth = require('./middleware/auth.js');
 
 const app = express();
 
@@ -24,6 +26,7 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(auth.initialize());
 /*
   ROUTE HANDLERS
 */
@@ -32,6 +35,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1/recipes', recipeRouter);
+app.use('/api/v1/users', userRouter);
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => {
