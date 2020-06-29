@@ -24,6 +24,10 @@ app.use(express.urlencoded({ extended: true }));
 /*
   ROUTE HANDLERS
 */
+app.get('/', (req, res) => {
+  res.redirect('/api/v1/recipes');
+});
+
 app.use('/api/v1/recipes', recipeRouter);
 
 const port = process.env.PORT || 8080;
