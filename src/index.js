@@ -4,6 +4,7 @@ const path = require('path');
 
 const auth = require('./middleware/auth.js');
 const recipeRouter = require('./routers/recipe');
+const userRouter = require('./routers/user');
 const { handleError } = require('./utils/error');
 
 const app = express();
@@ -36,6 +37,7 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1/recipes', recipeRouter);
+app.use('/api/v1/users', userRouter);
 
 app.use(handleError);
 
