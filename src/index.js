@@ -2,6 +2,7 @@ const cors = require('cors');
 const express = require('express');
 const path = require('path');
 
+const auth = require('./middleware/auth.js');
 const recipeRouter = require('./routers/recipe');
 const { handleError } = require('./utils/error');
 
@@ -24,6 +25,8 @@ app.use((req, res, next) => {
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use(auth.initialize());
 
 /*
   ROUTE HANDLERS
