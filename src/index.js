@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 
 const recipeRouter = require('./routers/recipe');
+const { handleError } = require('./utils/error');
 
 const app = express();
 
@@ -32,6 +33,8 @@ app.get('/', (req, res) => {
 });
 
 app.use('/api/v1/recipes', recipeRouter);
+
+app.use(handleError);
 
 const port = process.env.PORT || 8080;
 app.listen(port, () => {

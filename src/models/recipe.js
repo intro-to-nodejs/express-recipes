@@ -1,5 +1,8 @@
 const fs = require('fs').promises;
 const path = require('path');
+
+const { CustomError } = require('../utils/error');
+
 const recipesFilePath = path.join(__dirname, './recipes.json');
 
 const remove = async id => {
@@ -8,9 +11,7 @@ const remove = async id => {
   const recipe = recipes.find(recipe => recipe.id === id);
 
   if (!recipe) {
-    const err = new Error('Recipe not found');
-    err.status = 404;
-    throw err;
+    throw new CustomError({ statusCode: 404, message: 'Recipe Not Found!' });
   }
 
   const newRecipes = recipes
@@ -34,9 +35,7 @@ const get = async id => {
   const recipe = recipes.find(recipe => recipe.id === id);
 
   if (!recipe) {
-    const err = new Error('Recipe not found');
-    err.status = 404;
-    throw err;
+    throw new CustomError({ statusCode: 404, message: 'Recipe Not Found!' });
   }
 
   return recipe;
@@ -64,9 +63,7 @@ const update = async ({ id, content }) => {
   const recipe = recipes.find(recipe => recipe.id === id);
 
   if (!recipe) {
-    const err = new Error('Recipe not found');
-    err.status = 404;
-    throw err;
+    throw new CustomError({ statusCode: 404, message: 'Recipe Not Found!' });
   }
 
   const updatedRecipe = {
